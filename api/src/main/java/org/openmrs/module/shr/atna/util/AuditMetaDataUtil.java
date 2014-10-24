@@ -6,11 +6,12 @@ import java.net.UnknownHostException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.marc.shic.atna.AuditActor;
-import org.marc.shic.atna.AuditActorType;
-import org.marc.shic.atna.AuditMetaData;
-import org.marc.shic.atna.AuditParticipant;
-import org.marc.shic.atna.ParticipantRoleType;
+import org.dcm4che3.audit.ActiveParticipant;
+import org.dcm4che3.audit.AuditMessages;
+import org.dcm4che3.audit.AuditMessages.ParticipantObjectIDTypeCode;
+import org.dcm4che3.audit.ParticipantObjectDetail;
+import org.dcm4che3.audit.ParticipantObjectIdentification;
+import org.openmrs.Encounter;
 import org.openmrs.Patient;
 import org.openmrs.PatientIdentifier;
 import org.openmrs.module.shr.atna.configuration.AtnaConfiguration;
@@ -61,40 +62,27 @@ public final class AuditMetaDataUtil {
 	 * @param userId Is the value to be placed in the userId
 	 * @return
 	 */
-	public AuditActor getOpenSHRActor(AuditActorType role, String endpointAddress)
+	public ActiveParticipant getOpenSHRActor(AuditMessages.RoleIDCode role, String endpointAddress)
 	{
-		AuditActor retVal = new AuditActor();
-		retVal.setActorType(role);
-		retVal.setNetworkAccessPointTypeCode((short) 1);
-		retVal.setUserIsRequestor(role == AuditActorType.Source);
+		ActiveParticipant retVal = new ActiveParticipant();
+		retVal.setNetworkAccessPointTypeCode(AuditMessages.NetworkAccessPointTypeCode.MachineName);
 		try {
-			retVal.setNetworkEndpoint(InetAddress.getLocalHost().getHostName());
+			retVal.setNetworkAccessPointID(InetAddress.getLocalHost().getHostName());
 		} catch (UnknownHostException e) {
 			log.error(e);
 		}
-		retVal.setAlternativeUserId(ManagementFactory.getRuntimeMXBean().getName());
-		retVal.setIdentifier(endpointAddress);
+		retVal.setUserIsRequestor(role == AuditMessages.RoleIDCode.Source);
+		retVal.setAlternativeUserID(ManagementFactory.getRuntimeMXBean().getName());
+		retVal.setUserID(endpointAddress);
+		retVal.getRoleIDCode().add(role);
 		return retVal;
 	}
-	
-	/**
-	 * Get a remote actor node
-	 */
-	public AuditActor getRemoteActor(AuditActorType role, String networkEndpoint, String identifier)
-	{
-		AuditActor retVal = new AuditActor();
-		retVal.setActorType(role);
-		retVal.setNetworkAccessPointTypeCode((short) 1);
-		retVal.setUserIsRequestor(role == AuditActorType.Source);
-		retVal.setNetworkEndpoint(networkEndpoint);
-		retVal.setIdentifier(identifier);
-		return retVal;
-	}
+
 
 	/**
 	 * Get audit participant for a patient
 	 */
-	public AuditParticipant getParticipant(Patient patient)
+	public ParticipantObjectIdentification getParticipant(Patient patient, String detail)
 	{
 	
 		PatientIdentifier pid = null;
@@ -102,30 +90,46 @@ public final class AuditMetaDataUtil {
 			if(id.getIdentifierType().getName().equals(this.m_configuration.getEcidRoot()))
 				pid = id;
 			
-		AuditParticipant retVal = new AuditParticipant();
-		retVal.setParticipantRoleType(ParticipantRoleType.Patient);
-		retVal.setTypeCode((short)1);
-		retVal.setTypeCodeRole((short)1);
+		ParticipantObjectIdentification retVal = new ParticipantObjectIdentification();
 		
 		// Found ECID, use that
 		if(pid != null)
-			retVal.setIdentifier(String.format(HL7_CXFORMAT, pid.getIdentifier(), pid.getIdentifierType().getName()));
+			retVal.setParticipantObjectID(String.format(HL7_CXFORMAT, pid.getIdentifier(), pid.getIdentifierType().getName()));
 		else
-			retVal.setIdentifier(String.format(HL7_CXFORMAT, patient.getId(), this.m_configuration.getPatientRoot()));
+			retVal.setParticipantObjectID(String.format(HL7_CXFORMAT, patient.getId(), this.m_configuration.getPatientRoot()));
+		
+		// Type code
+		retVal.setParticipantObjectTypeCode(AuditMessages.ParticipantObjectTypeCode.Person);
+		retVal.setParticipantObjectTypeCodeRole(AuditMessages.ParticipantObjectTypeCodeRole.Patient);
+		retVal.setParticipantObjectIDTypeCode(ParticipantObjectIDTypeCode.PatientNumber);
+		
+		if(detail != null)
+		{
+			ParticipantObjectDetail adetail = new ParticipantObjectDetail();
+			adetail.setType(detail);
+			retVal.getParticipantObjectDetail().add(adetail);
+		}
 		
 		return retVal;
 	}
 	
 	/**
-	 * Creates a participant with the specified data
+	 * Participant object identification
 	 */
-	public AuditParticipant createParticipant(int objectTypeCode, int objectRoleCode, ParticipantRoleType idTypeCode, String objectId)
+	public ParticipantObjectIdentification getParticipant(Encounter enc, String lifecycle)
 	{
-		AuditParticipant retVal = new AuditParticipant();
-		retVal.setTypeCode((short)objectTypeCode);
-		retVal.setTypeCodeRole((short)objectRoleCode);
-		retVal.setParticipantRoleType(idTypeCode);
-		retVal.setIdentifier(objectId);
+		
+		ParticipantObjectIdentification retVal = new ParticipantObjectIdentification();
+		
+		// Set properties
+		retVal.setParticipantObjectID(String.format(HL7_CXFORMAT, enc.getId(), this.m_configuration.getEncounterRoot()));
+		
+		// Type code
+		retVal.setParticipantObjectTypeCode(AuditMessages.ParticipantObjectTypeCode.SystemObject);
+		retVal.setParticipantObjectTypeCodeRole(AuditMessages.ParticipantObjectTypeCodeRole.Resource);
+		retVal.setParticipantObjectIDTypeCode(ParticipantObjectIDTypeCode.EncounterNumber);
+		retVal.setParticipantObjectDataLifeCycle(lifecycle);
+
 		return retVal;
 	}
 }

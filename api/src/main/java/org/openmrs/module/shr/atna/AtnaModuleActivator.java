@@ -13,26 +13,23 @@
  */
 package org.openmrs.module.shr.atna;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.openmrs.api.context.Context;
-import org.openmrs.module.Activator;
+import org.dcm4che3.audit.AuditMessages;
+import org.dcm4che3.net.Connection;
+import org.dcm4che3.net.Device;
+import org.dcm4che3.net.audit.AuditLogger;
+import org.dcm4che3.net.audit.AuditRecordRepository;
 import org.openmrs.module.ModuleActivator;
-import org.openmrs.module.shr.cdahandler.AlreadyRegisteredException;
-import org.openmrs.module.shr.cdahandler.CodedValue;
-import org.openmrs.module.shr.cdahandler.ContentHandlerService;
-import org.openmrs.module.shr.cdahandler.InvalidCodedValueException;
-import org.openmrs.module.shr.cdahandler.contenthandler.CdaContentHandler;
+import org.openmrs.module.shr.atna.configuration.AtnaConfiguration;
 
 /**
  * This class contains the logic that is run every time this module is either started or shutdown
  */
 public class AtnaModuleActivator implements ModuleActivator {
 	
-protected Log log = LogFactory.getLog(getClass());
+	protected Log log = LogFactory.getLog(getClass());
+	
 	
 	/**
 	 * @see ModuleActivator#contextRefreshed()
