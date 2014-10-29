@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.openmrs.module</groupId>
 		<artifactId>shr-atna</artifactId>
-		<version>0.1.0</version>
+		<version>0.5.0</version>
 	</parent>
 
 	<artifactId>shr-atna-api</artifactId>

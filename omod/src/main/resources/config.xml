@@ -74,6 +74,11 @@
 		<description>Identifies the port which the audit repository listens on</description>
 	</globalProperty>
 	<globalProperty>
+		<property>${project.parent.artifactId}.deviceName</property>
+		<defaultValue>OpenSHR</defaultValue>
+		<description>Identifies the local device name to use in audits</description>
+	</globalProperty>
+	<globalProperty>
 		<property>shr.id.epidRoot</property>
 		<defaultValue>1.2.3.4.5.6.7
 		</defaultValue>

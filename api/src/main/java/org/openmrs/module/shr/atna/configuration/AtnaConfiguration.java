@@ -27,6 +27,7 @@ public final class AtnaConfiguration {
 	private static final String PROP_NAME_AR_TRANSPORT = "shr-atna.auditRepository.transport";
 	private static final String PROP_NAME_AR_PORT = "shr-atna.auditRepository.port";
 	private static final String PROP_NAME_LOCAL_BIND_ADDR = "shr-atna.auditRepository.localBindAddr";
+	private static final String PROP_NAME_DEV_NAME = "shr-atna.deviceName";
 	
 	private final String m_localBindAddrDefault = "127.0.0.1";
 	private final String m_trustStoreDefault = "";
@@ -39,6 +40,7 @@ public final class AtnaConfiguration {
 	private final String m_arEndpointDefault = "127.0.0.1";
 	private final String m_arTransportDefault = "audit-udp";
 	private final int m_arPortDefault = 514;
+	private final String m_deviceNameDefault = "OpenSHRInstance";
 	
 	/**
 	 * Shic configuration utility
@@ -104,6 +106,12 @@ public final class AtnaConfiguration {
 		return this.getShrRoot() + ".9";
     }
 
+	/**
+     * Get the ECID root
+     * @return
+     */
+    public String getDeviceName()  { return this.getOrCreateGlobalProperty(PROP_NAME_DEV_NAME, this.m_deviceNameDefault); }
+    
     /**
      * Get the ECID root
      * @return

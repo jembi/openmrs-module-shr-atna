@@ -37,7 +37,7 @@ public class AtnaAuditServiceImpl extends BaseOpenmrsService implements AtnaAudi
 	 * Create logger device
 	 */
 	private Device createLoggerDevice() { 
-		Device device = new Device("AuditDevice");
+		Device device = new Device(this.m_configuration.getDeviceName());
 
 		
 		Connection transportConnection = new Connection(this.m_configuration.getAuditRepositoryTransport(), this.m_configuration.getAuditRepositoryEndpoint());
