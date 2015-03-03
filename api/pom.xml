@@ -70,7 +70,7 @@
 		<dependency>
 			<groupId>org.dcm4che</groupId>
 			<artifactId>dcm4che-audit</artifactId>
-			<version>3.3.5-SNAPSHOT</version>
+			<version>3.3.6-SNAPSHOT</version>
 			<exclusions>
 				<exclusion>
 					<artifactId>activation</artifactId>
@@ -89,7 +89,7 @@
 		<dependency>
 			<groupId>org.dcm4che</groupId>
 			<artifactId>dcm4che-net-audit</artifactId>
-			<version>3.3.5-SNAPSHOT</version>
+			<version>3.3.6-SNAPSHOT</version>
 			<exclusions>
 				<exclusion>
 					<artifactId>slf4j-api</artifactId>

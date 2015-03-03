@@ -96,6 +96,31 @@
 		</defaultValue>
 		<description>Identifies the root which should be attached to all observations, orders, allergies, etc. in this SHR instance (used for detecting duplicates)</description>
 	</globalProperty>
+
+	<globalProperty>
+		<property>shr-atna.security.trustStore</property>
+		<defaultValue>/usr/share/tomcat/tls/truststore
+		</defaultValue>
+		<description>Identifies the trust store</description>
+	</globalProperty>
+	<globalProperty>
+		<property>shr-atna.security.trustStorePassword</property>
+		<defaultValue>Password
+		</defaultValue>
+		<description>Identifies the trustStore password</description>
+	</globalProperty>
+	<globalProperty>
+		<property>shr-atna.security.keyStore</property>
+		<defaultValue>/usr/share/tomcat/tls/keystore.jks
+		</defaultValue>
+		<description>Identifies the keystore</description>
+	</globalProperty>
+	<globalProperty>
+		<property>shr-atna.security.keyStorePassword</property>
+		<defaultValue>Password
+		</defaultValue>
+		<description>Identifies the keyStore password</description>
+	</globalProperty>
 	
 	<!--
 	<dwr>

@@ -34,9 +34,6 @@ public final class AtnaConfiguration {
 	private final String m_trustStorePasswordDefault = "";
 	private final String m_keyStoreDefault = "";
 	private final String m_keyStorePasswordDefault = "";
-	private final String m_shrRootDefault = "1.2.3.4.5.6";
-	private final String m_shrEcidRootDefault = "";
-	private final String m_shrEpidRootDefault = "";
 	private final String m_arEndpointDefault = "127.0.0.1";
 	private final String m_arTransportDefault = "audit-udp";
 	private final int m_arPortDefault = 514;
@@ -79,98 +76,13 @@ public final class AtnaConfiguration {
 		}
     }
 
-    /**
-     * Get the SHR root
-     * @return
-     */
-    public String getShrRoot()  { return this.getOrCreateGlobalProperty(PROP_SHR_ROOT, this.m_shrRootDefault); }
 
-    /**
-	 * Get internal provider identifiers
-	 */
-	public String getProviderRoot() {
-		return this.getShrRoot() + ".7";
-    }
-
-	/**
-	 * Get internal location identifier root
-	 */
-	public String getLocationRoot() {
-		return this.getShrRoot() + ".8";
-    }
-
-	/**
-	 * Get internal patient root identifiers
-	 */
-	public String getPatientRoot() {
-		return this.getShrRoot() + ".9";
-    }
 
 	/**
      * Get the ECID root
      * @return
      */
     public String getDeviceName()  { return this.getOrCreateGlobalProperty(PROP_NAME_DEV_NAME, this.m_deviceNameDefault); }
-    
-    /**
-     * Get the ECID root
-     * @return
-     */
-    public String getEcidRoot()  { return this.getOrCreateGlobalProperty(PROP_ECID_ROOT, this.m_shrEcidRootDefault); }
-    /**
-     * Get the SHR root
-     * @return
-     */
-    public String getEpidRoot()  { return this.getOrCreateGlobalProperty(PROP_EPID_ROOT, this.m_shrEpidRootDefault); }
-    
-    /**
-	 * Get the root of Visits
-	 */
-	public String getVisitRoot() {
-		return this.getShrRoot() + ".1";
-	}
-	
-	/**
-	 * Get the root of encounters
-	 */
-	public String getEncounterRoot() {
-		return this.getShrRoot() + ".2";
-	}	
-
-	/**
-	 * Get the root of Obs
-	 */
-	public String getObsRoot() {
-		return this.getShrRoot() + ".3";
-	}	
-
-	/**
-	 * Get the root of orders
-	 */
-	public String getOrderRoot() {
-		return this.getShrRoot() + ".4";
-	}	
-
-	/**
-	 * Get the root of problems
-	 */
-	public String getProblemRoot() {
-		return this.getShrRoot() + ".5";
-	}	
-
-	/**
-	 * Get the root of allergies
-	 */
-	public String getAllergyRoot() {
-		return this.getShrRoot() + ".6";
-	}	
-
-	/**
-	 * Get the root oid for Users
-	 */
-	public String getUserRoot() {
-		return this.getShrRoot() + ".10";
-    }
 
     /**
      * Get the audit repository endpoint

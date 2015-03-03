@@ -38,17 +38,27 @@ public class AtnaAuditServiceImpl extends BaseOpenmrsService implements AtnaAudi
 	 */
 	private Device createLoggerDevice() { 
 		Device device = new Device(this.m_configuration.getDeviceName());
-
 		
 		Connection transportConnection = new Connection(this.m_configuration.getAuditRepositoryTransport(), this.m_configuration.getAuditRepositoryEndpoint());
 		
 		if("audit-udp".equals(transportConnection.getCommonName()))
 		{
+
 			transportConnection.setClientBindAddress(this.m_configuration.getLocalBindAddress());
 			transportConnection.setProtocol(Connection.Protocol.SYSLOG_UDP);
 		}
 		else if("audit-tls".equals(transportConnection.getCommonName()))
 		{
+			if(!this.m_configuration.getLocalBindAddress().equals("0.0.0.0"))
+				transportConnection.setClientBindAddress(this.m_configuration.getLocalBindAddress());
+				
+
+			device.setKeyStoreURL(this.m_configuration.getKeyStoreFile());
+			device.setKeyStorePin(this.m_configuration.getKeyStorePassword());
+			device.setKeyStoreType("JKS");
+			device.setTrustStoreURL(this.m_configuration.getTrustStoreFile());
+			device.setTrustStorePin(this.m_configuration.getTrustStorePassword());
+			device.setTrustStoreType("JKS");
 			transportConnection.setProtocol(Connection.Protocol.SYSLOG_TLS);
 			transportConnection.setTlsCipherSuites("TLS_RSA_WITH_AES_128_CBC_SHA");
 		}
