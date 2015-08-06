@@ -4,7 +4,7 @@
 
 	<groupId>org.openmrs.module</groupId>
 	<artifactId>shr-atna</artifactId>
-	<version>0.5.0</version>
+	<version>1.0.0</version>
 	<packaging>pom</packaging>
 	<name>SHR ATNA Module</name>
 	<description>OpenSHR ATNA Code</description>
@@ -94,6 +94,11 @@
 					<groupId>org.openmrs.maven.plugins</groupId>
 					<artifactId>maven-openmrs-plugin</artifactId>
 					<version>1.0.1</version>
+				</plugin>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>versions-maven-plugin</artifactId>
+					<version>2.2</version>
 				</plugin>
 			</plugins>
 		</pluginManagement>
