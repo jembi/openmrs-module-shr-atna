@@ -4,7 +4,7 @@
 
 	<groupId>org.openmrs.module</groupId>
 	<artifactId>shr-atna</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>SHR ATNA Module</name>
 	<description>OpenSHR ATNA Code</description>
@@ -12,9 +12,9 @@
 	<url>https://wiki.openmrs.org/x/FQ4z</url>
 
 	<scm>
-		<connection>scm:git:git@github.com:openmrs/openmrs-module-basicmodule.git</connection>
-		<developerConnection>scm:git:git@github.com:openmrs/openmrs-module-basicmodule.git</developerConnection>
-		<url>https://github.com/openmrs/openmrs-module-basicmodule/</url>
+		<connection>scm:git@github.com:jembi/openmrs-module-shr-atna.git</connection>
+		<developerConnection>scm:git@github.com:jembi/openmrs-module-shr-atna.git</developerConnection>
+		<url>https://github.com/jembi/openmrs-module-shr-atna.git</url>
 	</scm>
 
 	<modules>
@@ -76,7 +76,7 @@
 	</dependencyManagement>
 
 	<properties>
-		<openMRSVersion>1.10.0</openMRSVersion>
+		<openMRSVersion>1.10.3</openMRSVersion>
 	</properties>
 
 	<build>
