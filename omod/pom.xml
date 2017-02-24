@@ -4,12 +4,12 @@
 	<parent>
 		<groupId>org.openmrs.module</groupId>
 		<artifactId>shr-atna</artifactId>
-		<version>1.0.0</version>
+		<version>1.0.1-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>shr-atna-omod</artifactId>
 	<packaging>jar</packaging>
-	<name>Basic Module OMOD</name>
+	<name>SHR ATNA Module OMOD</name>
 	<description>OpenMRS module project for SHR ATNA Module</description>
 
 	<dependencies>
